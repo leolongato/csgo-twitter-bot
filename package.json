@@ -1,0 +1,26 @@
+{
+  "name": "csgo-twitter-bot",
+  "author": "Leonardo Zoccal Longato",
+  "version": "1.0.0",
+  "main": "main.js",
+  "license": "MIT",
+  "dependencies": {
+    "cron": "^1.8.2",
+    "dotenv": "^16.0.0",
+    "hltv": "^3.4.0",
+    "node-emoji": "^1.11.0",
+    "twitter-api-client": "^1.5.2"
+  },
+  "scripts": {
+    "dev": "ts-node-dev --ignore-watch NODE_MODULES --respawn --transpile-only main.ts",
+    "build": "tsc --build"
+  },
+  "devDependencies": {
+    "@types/cron": "^1.7.3",
+    "@types/express": "^4.17.13",
+    "@types/node": "^17.0.23",
+    "@types/node-emoji": "^1.8.1",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.6.3"
+  }
+}
