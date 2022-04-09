@@ -1,6 +1,6 @@
 # CSGO Twitter Bot
 
-Bot that tweets the matches of the day
+Bot that tweets all Counter-Strike: Global Offensive (CSGO) matches of the day
 
 ## Installation
 
