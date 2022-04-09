@@ -13,7 +13,8 @@
   },
   "scripts": {
     "dev": "ts-node-dev --ignore-watch NODE_MODULES --respawn --transpile-only main.ts",
-    "build": "tsc --build"
+    "build": "tsc --build",
+    "start": "node main.js"
   },
   "devDependencies": {
     "@types/cron": "^1.7.3",
