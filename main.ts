@@ -4,15 +4,21 @@ import cron from "cron";
 import HLTV, { MatchFilter, MatchPreview } from "hltv";
 import emojis from "node-emoji";
 
-var job = new cron.CronJob("0 0 7 * * *", Run, null, true, "America/Sao_Paulo");
+var job = new cron.CronJob(
+  "0 50 22 * * *",
+  Run,
+  null,
+  true,
+  "America/Sao_Paulo"
+);
 
 job.start();
 
 async function Run() {
   const matches = await HLTV.getMatches({ filter: MatchFilter.TopTier });
-
+  console.log(matches);
   let filteredMatches = matches.filter(FilterMatches);
-
+  console.log(filteredMatches, filteredMatches.length);
   if (filteredMatches.length === 0) {
     console.log("Não há jogos neste dia");
     return;
@@ -107,7 +113,7 @@ async function Run() {
 
 function FilterMatches(match: MatchPreview) {
   const date = new Date(match.date || 0);
-  const now = new Date();
+  const now = new Date(convertTZ(new Date()));
 
   return (
     (date.getDay() === now.getDay() + 1 &&
@@ -115,6 +121,12 @@ function FilterMatches(match: MatchPreview) {
       date.getFullYear() === now.getFullYear()) ||
     match.live === true
   );
+}
+
+function convertTZ(date: Date) {
+  return new Date(date).toLocaleString("en-US", {
+    timeZone: "America/Sao_Paulo",
+  });
 }
 
 function Sleep(ms: number) {
