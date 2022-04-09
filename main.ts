@@ -29,7 +29,7 @@ async function Run() {
 
   for (const match of filteredMatches) {
     const eventName = match.event?.name || match.title || "";
-    const date = new Date(match.date || 0);
+    const date = new Date(convertTZ(new Date(match.date || 0)));
     const formatedDate = date.toLocaleDateString("pt-BR", {
       weekday: "long",
       year: "numeric",
