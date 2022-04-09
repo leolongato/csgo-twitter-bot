@@ -4,21 +4,16 @@ import cron from "cron";
 import HLTV, { MatchFilter, MatchPreview } from "hltv";
 import emojis from "node-emoji";
 
-var job = new cron.CronJob(
-  "0 50 22 * * *",
-  Run,
-  null,
-  true,
-  "America/Sao_Paulo"
-);
+var job = new cron.CronJob("0 0 8 * * *", Run, null, true, "America/Sao_Paulo");
 
 job.start();
 
 async function Run() {
+  console.log("Starting tweets process...");
   const matches = await HLTV.getMatches({ filter: MatchFilter.TopTier });
-  console.log(matches);
+
   let filteredMatches = matches.filter(FilterMatches);
-  console.log(filteredMatches, filteredMatches.length);
+
   if (filteredMatches.length === 0) {
     console.log("Não há jogos neste dia");
     return;
@@ -105,10 +100,10 @@ async function Run() {
     const message = `${event}\n${matchFormat}\n${dateTime}\n${matchTeams}\n\n${hashTags}
       `;
 
-    // console.log(message);
     const tweet = await CreateTweet(message);
     console.log(tweet);
   }
+  console.log("Finishing tweets process.");
 }
 
 function FilterMatches(match: MatchPreview) {
@@ -116,7 +111,7 @@ function FilterMatches(match: MatchPreview) {
   const now = new Date(convertTZ(new Date()));
 
   return (
-    (date.getDay() === now.getDay() + 1 &&
+    (date.getDay() === now.getDay() &&
       date.getMonth() === now.getMonth() &&
       date.getFullYear() === now.getFullYear()) ||
     match.live === true
